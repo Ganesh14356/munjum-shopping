@@ -1,36 +1,29 @@
-import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
-import { getAuth, type Auth } from 'firebase/auth';
-import { getFirestore, type Firestore } from 'firebase/firestore';
-import { getStorage, type FirebaseStorage } from 'firebase/storage';
+import { initializeApp, getApps } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
-const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-const isConfigured = !!(apiKey && apiKey !== 'placeholder-api-key' && apiKey.startsWith('AIza'));
+let auth: ReturnType<typeof getAuth> | null = null;
+let db: ReturnType<typeof getFirestore> | null = null;
+let storage: ReturnType<typeof getStorage> | null = null;
 
-let app: FirebaseApp | null = null;
-let _auth: Auth | null = null;
-let _db: Firestore | null = null;
-let _storage: FirebaseStorage | null = null;
-
-if (isConfigured) {
-  try {
-    const firebaseConfig = {
-      apiKey,
-      authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-      appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    };
-    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-    _auth = getAuth(app);
-    _db = getFirestore(app);
-    _storage = getStorage(app);
-  } catch (e) {
-    console.warn('[Munjum] Firebase init failed:', e);
-  }
+try {
+  const app = getApps().length
+    ? getApps()[0]
+    : initializeApp({
+        apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+        authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+        storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+        appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+      });
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
+} catch {
+  // Firebase credentials missing or invalid — auth/db/storage remain null
 }
 
-export const firebaseReady = isConfigured && !!app;
-export const auth = _auth;
-export const db = _db;
-export const storage = _storage;
+export { auth, db, storage };
+export const firebaseReady = !!(auth && db);

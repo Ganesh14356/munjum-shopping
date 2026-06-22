@@ -27,7 +27,15 @@
       "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); cd \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\"; git add app/layout.tsx src/lib/firebase.ts; git commit -m \"fix: force-dynamic layout to skip Firebase SSR pre-render errors\"; git push origin master 2>&1)",
       "PowerShell(npm install -g @railway/cli 2>&1)",
       "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); $env:VERCEL_TOKEN = \"H3YQWAZ2RKTL3TRO5LFXQ4XFXPETLTHM\"; vercel whoami --token $env:VERCEL_TOKEN 2>&1)",
-      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); cd \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\"; git add -A; git commit -m \"fix: crash-safe Firebase init when credentials not configured\"; git push origin master 2>&1 | Select-Object -Last 8)"
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); cd \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\"; git add -A; git commit -m \"fix: crash-safe Firebase init when credentials not configured\"; git push origin master 2>&1 | Select-Object -Last 8)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); cd \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\"; vercel --yes --prod 2>&1 | Select-Object -Last 20)",
+      "PowerShell(Start-Process \"https://console.firebase.google.com\")",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); cd \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\"; vercel --yes --prod 2>&1 | Select-Object -Last 15)",
+      "PowerShell(Start-Process \"https://munjum-shopping.vercel.app\")",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); vercel env ls production 2>&1)",
+      "PowerShell(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\\\\public\\\\icons\")",
+      "PowerShell(\"Directory created\")",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\",\"User\"\\); cd \"C:\\\\Users\\\\munja\\\\OneDrive\\\\Desktop\\\\munjum shopping\"; git add -A; git commit -m \"fix: firebase try-catch init, add PWA icons, terms/privacy pages\"; git push origin master 2>&1 | Select-Object -Last 5)"
     ]
   }
 }
