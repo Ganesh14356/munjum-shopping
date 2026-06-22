@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
 };
 
+// All pages depend on Firebase auth — skip static pre-rendering at build time
+export const dynamic = 'force-dynamic';
+
 export const viewport: Viewport = {
   themeColor: '#6366f1',
 };
