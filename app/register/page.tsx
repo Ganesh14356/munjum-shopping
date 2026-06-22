@@ -37,6 +37,7 @@ function RegisterForm() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth || !db) { toast.error('Firebase not configured. Add credentials in Vercel settings.'); return; }
     if (!name || !email || !password) { toast.error('Please fill all required fields'); return; }
     if (password !== confirmPwd) { toast.error('Passwords do not match'); return; }
     if (password.length < 8) { toast.error('Password must be at least 8 characters'); return; }
@@ -75,6 +76,7 @@ function RegisterForm() {
   };
 
   const handleGoogle = async () => {
+    if (!auth || !db) { toast.error('Firebase not configured.'); return; }
     try {
       const provider = new GoogleAuthProvider();
       const credential = await signInWithPopup(auth, provider);

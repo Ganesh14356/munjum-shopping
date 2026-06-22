@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
+import { type User, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 
@@ -35,7 +35,7 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue>({
   user: null,
   profile: null,
-  loading: true,
+  loading: false,
   signOut: async () => {},
   isAdmin: false,
   isMerchant: false,
@@ -49,6 +49,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Firebase not configured — skip auth listener
+    if (!auth) return;
+
     let settled = false;
     const timeout = setTimeout(() => {
       if (!settled) setLoading(false);
@@ -58,7 +61,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       settled = true;
       clearTimeout(timeout);
       setUser(currentUser);
-      if (currentUser) {
+
+      if (currentUser && db) {
         try {
           const snap = await getDoc(doc(db, 'users', currentUser.uid));
           if (snap.exists()) {
@@ -80,29 +84,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       setLoading(false);
     });
+
     return () => { clearTimeout(timeout); unsubscribe(); };
   }, []);
 
   const signOut = async () => {
-    await firebaseSignOut(auth);
+    if (auth) await firebaseSignOut(auth);
+    setUser(null);
     setProfile(null);
   };
 
   const role = profile?.role ?? 'customer';
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        profile,
-        loading,
-        signOut,
-        isAdmin: role === 'admin',
-        isMerchant: role === 'merchant',
-        isAffiliate: role === 'affiliate',
-        isSupport: role === 'support',
-      }}
-    >
+    <AuthContext.Provider value={{
+      user, profile, loading, signOut,
+      isAdmin: role === 'admin',
+      isMerchant: role === 'merchant',
+      isAffiliate: role === 'affiliate',
+      isSupport: role === 'support',
+    }}>
       {children}
     </AuthContext.Provider>
   );

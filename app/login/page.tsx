@@ -18,6 +18,7 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth) { toast.error('Firebase not configured. Add credentials in Vercel settings.'); return; }
     if (!email || !password) { toast.error('Enter email and password'); return; }
     setLoading(true);
     try {
@@ -36,6 +37,7 @@ export default function LoginPage() {
   };
 
   const handleGoogle = async () => {
+    if (!auth) { toast.error('Firebase not configured. Add credentials in Vercel settings.'); return; }
     setGoogleLoading(true);
     try {
       const provider = new GoogleAuthProvider();

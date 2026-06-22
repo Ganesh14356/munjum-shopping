@@ -14,6 +14,7 @@ export default function ForgotPasswordPage() {
 
   const handleReset = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!auth) { toast.error('Firebase not configured. Add credentials in Vercel settings.'); return; }
     if (!email) { toast.error('Enter your email address'); return; }
     setLoading(true);
     try {

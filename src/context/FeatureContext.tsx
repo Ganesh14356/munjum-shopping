@@ -58,6 +58,7 @@ export function FeatureProvider({ children }: { children: React.ReactNode }) {
   const [flags, setFlags] = useState<FeatureFlags>(defaultFlags);
 
   useEffect(() => {
+    if (!db) return; // Firebase not configured — use default flags
     const settingsRef = doc(db, 'settings', 'global');
     getDoc(settingsRef)
       .then((snapshot) => {
